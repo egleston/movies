@@ -1,9 +1,11 @@
 # CCB developer-test-server - Egleston
 
 To build, do one of the following:
- `mvn clean package`
+```
+ mvn clean package
    -- OR --
- `docker run -ti --rm -v $(pwd):/code -w /code maven mvn clean package`
+ docker run -ti --rm -v $(pwd):/code -w /code maven mvn clean package
+```
 
 This will generate a WAR file under the `target/` directory. To run:
  `docker-compose up --build`
