@@ -29,7 +29,7 @@ The following URLs are available:
     - `limit'    - defaults to all
     - `category` - defaults to all
   - `/movies/api/detail/####`                    - a single film identified by the `film_id`
-  - `/movies/api/pretty                          - toggles pretty-printing of JSON
+  - `/movies/api/pretty`                         - toggles pretty-printing of JSON (no feedback - redirects back automatically)
 
 TODO:
  - JUnit tests
