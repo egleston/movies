@@ -14,8 +14,8 @@ This will start two docker containers:
  - web - an Apache/Tomcat servlet engine with the WAR file from above mounted at the /movies/
 
 The following URLs are available:
-  * /movies/webapi/film                       - the entire list of films
-  * /movies/webapi/film/####                  - a single film identified by the film_id
+  - /movies/webapi/film?orderBy=COL&offset=##&limit=##  - all films (parameters optional, default to **title**, **0**, and **20**
+  * /movies/webapi/film/####                            - a single film identified by the film_id
 
 * A list of movies
   * The user should be able to search the movies by title
