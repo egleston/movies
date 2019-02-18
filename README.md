@@ -26,7 +26,7 @@ The following URLs are available:
     - `rating`   - defaults to all
     - `orderBy`  - defaults to `title`
     - `offset`   - defaults to zero (0)
-    - `limit'    - defaults to all
+    - `limit`    - defaults to all
     - `category` - defaults to all
   - `/movies/api/detail/####`                    - a single film identified by the `film_id`
   - `/movies/api/pretty`                         - toggles pretty-printing of JSON (no feedback - redirects back automatically)
