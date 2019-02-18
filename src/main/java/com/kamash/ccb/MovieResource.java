@@ -19,20 +19,28 @@ public class MovieResource {
     @Path("/film")
     @Produces(MediaType.APPLICATION_JSON)
     public String getAll(
-             @QueryParam("offset")  @DefaultValue("0")     String offset,
-             @QueryParam("limit")   @DefaultValue("20")    String limit,
-             @QueryParam("orderBy") @DefaultValue("title") String orderBy
+             @QueryParam("title")   @DefaultValue("")      String title,
+             @QueryParam("orderBy") @DefaultValue("title") String orderBy,
+             @QueryParam("limit")   @DefaultValue("")      String limit,
+             @QueryParam("offset")  @DefaultValue("")      String offset
             ) {
-        logger.debug("Request for all films: offset={} limit={} orderBy={}", offset, limit, orderBy);
+        logger.debug("Request for all films: title={} orderBy={} limit={} offset={}", title, orderBy, limit, offset);
         JSONArray arr;
         try {
-            StringBuilder sb = new StringBuilder()
-                                  .append("SELECT * ")
-                                  .append("  FROM film")
-                                  .append(" ORDER BY ").append(orderBy)
-                                  .append(" LIMIT ").append(limit)
-                                  .append(" OFFSET ").append(offset)
-                                  ;
+            StringBuilder sb = new StringBuilder();
+            sb.append("SELECT * FROM film");
+            if (!title.equals("")) {
+                sb.append(" WHERE LOWER(title) like LOWER('%").append(title).append("%')");
+            }
+            if (!orderBy.equals("")) {
+                sb.append(" ORDER BY ").append(orderBy);
+            }
+            if (!limit.equals("")) {
+                sb.append(" LIMIT ").append(limit);
+            }
+            if (!offset.equals("")) {
+                sb.append(" OFFSET ").append(offset);
+            }
             arr = SqlHelper.queryArray(sb.toString());
         }
         catch (Exception e) {
@@ -44,9 +52,9 @@ public class MovieResource {
     }
 
     @GET
-    @Path("/film/{film_id}")
+    @Path("/detail/{film_id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getOne(@PathParam("film_id") String film_id) {
+    public String getFilm(@PathParam("film_id") String film_id) {
         logger.debug("Request for film #{}", film_id);
         JSONObject obj;
         try {
