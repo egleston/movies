@@ -14,7 +14,7 @@ This will start two docker containers:
  - db  - a vanilla MySql database populated with the Sakila Video Store database
  - web - an Apache/Tomcat servlet engine with the WAR file (from above) responding to all URLs starting with `/movies/`
 > Note: I decided to have this extra layer of URL handling since there might be other servlets running nearby.
-
+>
 >       I could install the WAR-file as ROOT servlet and modify web.xml to map `/movies` instead of `/api`
 
 
