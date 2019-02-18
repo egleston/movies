@@ -74,6 +74,13 @@ public class MovieResource {
                                   .append("  FROM film")
                                   .append(" WHERE film_id=").append(film_id);
             obj = SqlHelper.queryObject(sb.toString());
+            sb = new StringBuilder()
+                    .append("SELECT actor.first_name, actor.last_name, CONCAT(first_name, ' ', last_name) full_name")
+                    .append("  FROM actor")
+                    .append(" INNER JOIN film_actor ON actor.actor_id = film_actor.actor_id")
+                    .append(" INNER JOIN film       ON film.film_id   = film_actor.film_id")
+                    .append(" WHERE film.film_id = ").append(film_id);
+            obj.put("actors", SqlHelper.queryArray(sb.toString()));
         }
         catch (Exception e) {
             logger.error("getOne ERROR: " + e);
