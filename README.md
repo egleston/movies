@@ -19,6 +19,7 @@ This will start two docker containers:
 
 
 The following URLs are available:
+  - `/movies/`                                   - simple HTML page with links to demonstrate functionality
   - `/movies/api/film`                           - all films
     * optional arguments (query-string)
     - `title`    - defaults to all
