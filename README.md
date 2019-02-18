@@ -24,10 +24,10 @@ The following URLs are available:
     * optional arguments (query-string)
     - `title`    - defaults to all
     - `rating`   - defaults to all
-    - `orderBy`  - defaults to `title`
-    - `offset`   - defaults to zero (0)
-    - `limit`    - defaults to all
     - `category` - defaults to all
+    - `orderBy`  - defaults to `title`
+    - `limit`    - defaults to all
+    - `offset`   - defaults to zero (0)
   - `/movies/api/detail/####`                    - a single film identified by the `film_id`
   - `/movies/api/pretty`                         - toggles pretty-printing of JSON (no feedback - redirects back automatically)
 
