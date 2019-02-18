@@ -1,18 +1,18 @@
 # CCB developer-test-server - Egleston
 
 To build, do one of the following:
-```
- mvn clean package
- docker run -ti --rm -v $(pwd):/code -w /code maven mvn clean package
-```
+ `mvn clean package`
+   -- OR --
+ `docker run -ti --rm -v $(pwd):/code -w /code maven mvn clean package`
 
-This will generate a WAR file under the target/ directory. To run:
+This will generate a WAR file under the `target/` directory. To run:
  `docker-compose up --build`
 
 This will start two docker containers:
  - db  - a vanilla MySql database populated with the Sakila Video Store database
  - web - an Apache/Tomcat servlet engine with the WAR file (from above) responding to all URLs starting with `/movies/`
-> Note: I decided to have this extra layer of URL handling since there might be other servlets running nearby
+> Note: I decided to have this extra layer of URL handling since there might be other servlets running nearby.
+
 >       I could install the WAR-file as ROOT servlet and modify web.xml to map `/movies` instead of `/api`
 
 
