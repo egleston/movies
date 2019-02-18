@@ -1,5 +1,7 @@
 package com.kamash.ccb;
 
+import java.net.URI;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +12,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,21 +21,34 @@ import org.json.JSONObject;
 public class MovieResource {
     protected static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(java.lang.invoke.MethodHandles.lookup().lookupClass());
 
+    private static boolean pretty = false;
+
+    @GET
+    @Path("/pretty")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response togglePretty() throws Exception {
+        pretty = !pretty;
+        return Response.seeOther(new URI("..")).build();
+    }
+
     @GET
     @Path("/film")
     @Produces(MediaType.APPLICATION_JSON)
     public String getAll(
-             @QueryParam("title")   @DefaultValue("")      String title,
-             @QueryParam("rating")  @DefaultValue("")      String rating,
-             @QueryParam("orderBy") @DefaultValue("title") String orderBy,
-             @QueryParam("limit")   @DefaultValue("")      String limit,
-             @QueryParam("offset")  @DefaultValue("")      String offset
+             @QueryParam("title")    @DefaultValue("")      String title,
+             @QueryParam("rating")   @DefaultValue("")      String rating,
+             @QueryParam("category") @DefaultValue("")      String category,
+             @QueryParam("orderBy")  @DefaultValue("title") String orderBy,
+             @QueryParam("limit")    @DefaultValue("")      String limit,
+             @QueryParam("offset")   @DefaultValue("")      String offset
             ) {
-        logger.debug("Request for all films: title={} orderBy={} limit={} offset={}", title, orderBy, limit, offset);
+        logger.debug("Request for all films: title={} rating={} category={} orderBy={} limit={} offset={}", title, rating, category, orderBy, limit, offset);
         JSONArray arr;
+        StringBuilder sb = new StringBuilder();
         try {
-            StringBuilder sb = new StringBuilder();
-            sb.append("SELECT * FROM film");
+            sb.append("SELECT film.*")
+              .append("  FROM film");
+
             List<String> whereClause = new ArrayList<>();
             if (!title.equals("")) {
                 whereClause.add(String.format("UPPER(title) like '%%%s%%'", title.toUpperCase()));
@@ -40,9 +56,15 @@ public class MovieResource {
             if (!rating.equals("")) {
                 whereClause.add(String.format("rating='%s'", rating.toUpperCase()));
             }
+            if (!category.equals("")) {
+                sb.append(" INNER JOIN film_category ON film.film_id=film_category.film_id")
+                  .append(" INNER JOIN category      ON film_category.category_id=category.category_id");
+                whereClause.add(String.format("UPPER(category.name)='%s'", category.toUpperCase()));
+            }
             if (whereClause.size() > 0) {
                 sb.append(" WHERE ").append(String.join(" AND ", whereClause));
             }
+
             if (!orderBy.equals("")) {
                 sb.append(" ORDER BY ").append(orderBy);
             }
@@ -56,10 +78,11 @@ public class MovieResource {
         }
         catch (Exception e) {
             logger.error("getAll ERROR: " + e);
+            logger.error("            : " + sb);
             arr = new JSONArray()
                      .put("ERROR: " + e);
         }
-        return arr.toString(2);
+        return (pretty ? arr.toString(2) : arr.toString());
     }
 
     @GET

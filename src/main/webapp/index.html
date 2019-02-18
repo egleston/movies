@@ -1,0 +1,33 @@
+<html>
+<head>
+  <title>CCB - egleston</title>
+</head>
+<body>
+  <h2>CCB developer_test_server - Egleston</h2>
+  <p>Some simple links to demonstrate server</p>
+  <ul>
+    <li><a href="api/film">All Films</a></li>
+    <li><a href="api/film?limit=20">First 20 Films (default order)</a></li>
+    <li><a href="api/film?offset=20&limit=20">Next 20 Films (default order)</a></li>
+    <li><a href="api/film?limit=20&orderBy=length">First 20 Films (ordered by length)</a></li>
+
+    <li><a href="api/film?title=THE">Films with 'the' in title</a></li>
+    <li><a href="api/film?rating=PG">Films rated 'PG'</a></li>
+    <li><a href="api/film?category=comedy">Films that are a 'Comedy'</a></li>
+
+    <li><a href="api/film?title=THE&rating=PG">Films with 'the' in title rated 'PG'</a></li>
+    <li><a href="api/film?title=THE&category=comedy">Films 'the' in title that are a 'Comedy'</a></li>
+
+    <li><a href="api/detail/223">Information about film #223</a></li>
+    <li><a href="api/detail/997">Information about film #997</a></li>
+
+  </ul>
+
+  <p><a href=api/pretty>Toggle</a> pretty-print of JSON</a></p>
+
+  <p>Some error conditions</p>
+  <ul>
+    <li><a href="api/detail/123456">Information about film #123456</a></li>
+  </ul>
+</body>
+</html>
