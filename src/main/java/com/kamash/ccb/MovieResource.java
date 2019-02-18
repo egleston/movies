@@ -1,5 +1,8 @@
 package com.kamash.ccb;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -20,6 +23,7 @@ public class MovieResource {
     @Produces(MediaType.APPLICATION_JSON)
     public String getAll(
              @QueryParam("title")   @DefaultValue("")      String title,
+             @QueryParam("rating")  @DefaultValue("")      String rating,
              @QueryParam("orderBy") @DefaultValue("title") String orderBy,
              @QueryParam("limit")   @DefaultValue("")      String limit,
              @QueryParam("offset")  @DefaultValue("")      String offset
@@ -29,8 +33,15 @@ public class MovieResource {
         try {
             StringBuilder sb = new StringBuilder();
             sb.append("SELECT * FROM film");
+            List<String> whereClause = new ArrayList<>();
             if (!title.equals("")) {
-                sb.append(" WHERE LOWER(title) like LOWER('%").append(title).append("%')");
+                whereClause.add(String.format("UPPER(title) like '%%%s%%'", title.toUpperCase()));
+            }
+            if (!rating.equals("")) {
+                whereClause.add(String.format("rating='%s'", rating.toUpperCase()));
+            }
+            if (whereClause.size() > 0) {
+                sb.append(" WHERE ").append(String.join(" AND ", whereClause));
             }
             if (!orderBy.equals("")) {
                 sb.append(" ORDER BY ").append(orderBy);

@@ -6,7 +6,7 @@ To build, do one of the following:
  docker run -ti --rm -v $(pwd):/code -w /code maven mvn clean package
 ```
 
-This will generate a WAR file under the target/ directory. To run, simply run:
+This will generate a WAR file under the target/ directory. To run:
  `docker-compose up --build`
 
 This will start two docker containers:
@@ -14,14 +14,16 @@ This will start two docker containers:
  - web - an Apache/Tomcat servlet engine with the WAR file from above mounted at the /movies/
 
 The following URLs are available:
-  - `/movies/webapi/film?orderBy=COL&offset=##&limit=##` - all films (parameters optional, default to **title**, **0**, and **all**
-  * `/movies/webapi/detail/####`                         - a single film identified by the `film_id`
+  - `/movies/webapi/film`                           - all films
+    * optional arguments (query-string)
+    - `title`   - defaults to all
+    - `rating`  - defaults to all
+    - `orderBy` - defaults to `title`
+    - `offset`  - defaults to zero (0)
+    - `limit'   - defaults to all
+  - `/movies/webapi/detail/####`                    - a single film identified by the `film_id`
 
-* A list of movies
-  * The user should be able to search the movies by title
-  * The user should be able to filter the movies by rating
   * The user should be able to filter the movies by category
-* Movie details for each movie
 * A list of actors in a movie
 
 
