@@ -9,9 +9,6 @@ import java.sql.SQLException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.Set;
-import java.util.TreeSet;
-
 public class SqlHelper {
     protected static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(java.lang.invoke.MethodHandles.lookup().lookupClass());
 
