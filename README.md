@@ -29,5 +29,8 @@ The following URLs are available:
 TODO:
  - logging integration (log4j2 with file rotation)
  - proper MySql configuration (properties file, external datastore, etc.)
+ - connection pooling, exception handling, retry/reconnect
  - full DAO/CRUD table-to-object mappings
+ - JUnit tests
+ - SQL Injection checks (sqlmap)
 

@@ -11,7 +11,7 @@
 
     <build>
         <defaultGoal>package</defaultGoal>
-        <finalName>movies-${version}</finalName>
+        <finalName>movies-${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

@@ -6,8 +6,8 @@ import java.sql.DriverManager;
 public class ConnectionManager {
     protected static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(java.lang.invoke.MethodHandles.lookup().lookupClass());
 
-    private static String DRIVER = "com.mysql.jdbc.Driver";
-    private static String URL    = "jdbc:mysql://172.17.0.2/sakila";
+    private static String DRIVER = "com.mysql.cj.jdbc.Driver";
+    private static String URL    = "jdbc:mysql://db/sakila";
     private static String USER   = "sakila";
     private static String PASS   = "sakila";
     private static ConnectionManager instance;
