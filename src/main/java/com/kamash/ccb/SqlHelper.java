@@ -25,28 +25,10 @@ public class SqlHelper {
         return obj;
     }
 
-    public static JSONArray queryArray(String sql) throws SQLException {
-        Connection conn = ConnectionManager.getInstance().getConnection();
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        ResultSet rs = stmt.executeQuery();
-
-        JSONArray arr = new JSONArray();
-        while (rs.next()) {
-            arr.put(rsToJson(rs));
-        }
-        return arr;
-    }
-
-    public static JSONObject queryObject(String sql) throws SQLException {
-        Connection conn = ConnectionManager.getInstance().getConnection();
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        ResultSet rs = stmt.executeQuery();
-
-        rs.next();
-        return rsToJson(rs);
-    }
-
     public static JSONArray queryArray(String sql, List<Object> varList) throws SQLException {
+        logger.info("queryArray");
+        logger.info(" - " + sql);
+        logger.info(" - " + varList);
         Connection conn = ConnectionManager.getInstance().getConnection();
         PreparedStatement stmt = conn.prepareStatement(sql);
         for (int i = 0; i < varList.size(); i++) {

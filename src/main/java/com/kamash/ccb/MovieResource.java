@@ -50,16 +50,20 @@ public class MovieResource {
               .append("  FROM film");
 
             List<String> whereClause = new ArrayList<>();
+            List<Object> varList = new ArrayList<>();
             if (!title.equals("")) {
-                whereClause.add(String.format("UPPER(title) like '%%%s%%'", title.toUpperCase()));
+                whereClause.add("UPPER(title) like ?");
+                varList.add("%" + title.toUpperCase() + "%");
             }
             if (!rating.equals("")) {
-                whereClause.add(String.format("rating='%s'", rating.toUpperCase()));
+                whereClause.add("rating=?");
+                varList.add(rating.toUpperCase());
             }
             if (!category.equals("")) {
                 sb.append(" INNER JOIN film_category ON film.film_id=film_category.film_id")
                   .append(" INNER JOIN category      ON film_category.category_id=category.category_id");
-                whereClause.add(String.format("UPPER(category.name)='%s'", category.toUpperCase()));
+                whereClause.add("UPPER(category.name)=?");
+                varList.add(category.toUpperCase());
             }
             if (whereClause.size() > 0) {
                 sb.append(" WHERE ").append(String.join(" AND ", whereClause));
@@ -74,7 +78,7 @@ public class MovieResource {
             if (!offset.equals("")) {
                 sb.append(" OFFSET ").append(offset);
             }
-            arr = SqlHelper.queryArray(sb.toString());
+            arr = SqlHelper.queryArray(sb.toString(), varList);
         }
         catch (Exception e) {
             logger.error("getAll ERROR: " + e);
