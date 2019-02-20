@@ -79,8 +79,7 @@ public class MovieResource {
         catch (Exception e) {
             logger.error("getAll ERROR: " + e);
             logger.error("            : " + sb);
-            arr = new JSONArray()
-                     .put("ERROR: " + e);
+            arr = new JSONArray();
         }
         return (pretty ? arr.toString(2) : arr.toString());
     }
@@ -92,23 +91,20 @@ public class MovieResource {
         logger.debug("Request for film #{}", film_id);
         JSONObject obj;
         try {
+            List<Object> varList = new ArrayList<>();
+            varList.add(new Integer(film_id));
+            obj = SqlHelper.queryObject("SELECT * FROM film WHERE film_id = ?", varList);
             StringBuilder sb = new StringBuilder()
-                                  .append("SELECT * ")
-                                  .append("  FROM film")
-                                  .append(" WHERE film_id=").append(film_id);
-            obj = SqlHelper.queryObject(sb.toString());
-            sb = new StringBuilder()
-                    .append("SELECT actor.first_name, actor.last_name, CONCAT(first_name, ' ', last_name) full_name")
-                    .append("  FROM actor")
-                    .append(" INNER JOIN film_actor ON actor.actor_id = film_actor.actor_id")
-                    .append(" INNER JOIN film       ON film.film_id   = film_actor.film_id")
-                    .append(" WHERE film.film_id = ").append(film_id);
-            obj.put("actors", SqlHelper.queryArray(sb.toString()));
+                                  .append("SELECT actor.first_name, actor.last_name, CONCAT(first_name, ' ', last_name) full_name")
+                                  .append("  FROM actor")
+                                  .append(" INNER JOIN film_actor ON actor.actor_id = film_actor.actor_id")
+                                  .append(" INNER JOIN film       ON film.film_id   = film_actor.film_id")
+                                  .append(" WHERE film.film_id = ?");
+            obj.put("actors", SqlHelper.queryArray(sb.toString(), varList));
         }
         catch (Exception e) {
             logger.error("getOne ERROR: " + e);
-            obj = new JSONObject()
-                     .put("ERROR", e.toString());
+            obj = new JSONObject();
         }
         return obj.toString(2);
     }
