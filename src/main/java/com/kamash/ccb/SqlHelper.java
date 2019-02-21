@@ -26,9 +26,6 @@ public class SqlHelper {
     }
 
     public static JSONArray queryArray(String sql, List<Object> varList) throws SQLException {
-        logger.info("queryArray");
-        logger.info(" - " + sql);
-        logger.info(" - " + varList);
         Connection conn = ConnectionManager.getInstance().getConnection();
         PreparedStatement stmt = conn.prepareStatement(sql);
         for (int i = 0; i < varList.size(); i++) {
