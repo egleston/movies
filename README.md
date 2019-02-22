@@ -1,16 +1,12 @@
 # CCB developer-test-server - Egleston
 
-To build, do one of the following:
-```
- mvn clean package
-   -- OR --
- docker run -ti --rm -v $(pwd):/code -w /code maven mvn clean package
-```
->
-> Add `-v $(pwd)/.m2:/root/.m2` if planning to build more than once
+To build, run: `mvn clean package`
 
 This will generate a WAR file under the `target/` directory. To run:
- `docker-compose up --build`
+```
+docker-compose build
+docker-compose up
+```
 
 This will start two docker containers:
  - db  - a vanilla MySql database populated with the Sakila Video Store database
